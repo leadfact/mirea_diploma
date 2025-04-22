@@ -1,0 +1,85 @@
+.texpadtmp/
+.idea/
+
+
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.lol
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+
+# PDF and DVI output
+*.dvi
+*.ps
+*.xdv
+
+# latexmk generated directory
+latex.out/
+
+# Editors and IDEs
+*.swp
+*.swo
+*.bak
+*~
+*.tmp
+*.backup
+
+# VSCode
+.vscode/
+
+# TeXShop (Mac)
+*.pdfsync
+*.synctex.gz(busy)
+
+# TeXworks
+*.xdy
+
+# Overleaf / Online tools cache
+output/
+
+# MacOS files
+.DS_Store
+
+# Windows Thumbs
+Thumbs.db
+
+# Git ignore file for auxiliary bibliography tools (bibtex/biber)
+*.bcf
+*.run.xml
+
+# Glossary
+*.glsdefs
+
+# TikZ externalization
+*.dpth
+*.md5
+*.auxlock
+
+# Other
+*.nav
+*.snm
+*.vrb
+
+# Makefile/latexmk log files
+*.log
+*.makefile.log
