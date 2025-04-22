@@ -1,0 +1,99 @@
+@startuml
+' Подключаем библиотеку ArchiMate
+!include <archimate/Archimate>
+!pragma layout dot
+skinparam linetype ortho
+
+' Настройки для улучшения читаемости
+skinparam defaultTextAlignment center
+skinparam wrapWidth 100
+top to bottom direction
+skinparam ranksep 80
+skinparam nodesep 30
+
+' Бизнес-слой
+archimate #Business "Клиент" as BR1 <<business-actor>>
+archimate #Business "Менеджер по кредитованию" as BR2 <<business-actor>>
+archimate #Business "Кредитование" as BPF <<business-process>>
+
+frame BPF_box as "Кредитование" {
+    archimate #Business "Регистрация клиентов" as BP1 <<business-process>>
+    archimate #Business "Обработка заявок на кредит" as BP2 <<business-process>>
+    archimate #Business "Утверждение кредитов" as BP3 <<business-process>>
+    archimate #Business "Выдача кредитов" as BP4 <<business-process>>
+    archimate #Business "Управление кредитами" as BP5 <<business-process>>
+    archimate #Business "Управление рисками" as BP6 <<business-process>>
+    archimate #Business "Отчетность" as BP7 <<business-process>>
+}
+
+' Бизнес-объекты
+archimate #Business "Заявка на кредит" as BO1 <<business-object>>
+archimate #Business "Кредитный договор" as BO2 <<business-object>>
+archimate #Business "Отчеты" as BO3 <<business-object>>
+archimate #Business "Подача заявки" as BE1 <<business-event>>
+
+' Сервисный слой
+archimate #Application "Сервис безопасности" as AS1 <<application-service>>
+archimate #Application "Сервис обработки заявок" as AS2 <<application-service>>
+archimate #Application "Сервис управления кредитами" as AS3 <<application-service>>
+archimate #Application "Сервис отчетности" as AS4 <<application-service>>
+
+' Технологический слой
+archimate #Technology "Система безопасности" as AC1 <<application-component>>
+archimate #Technology "CRM" as AC2 <<application-component>>
+archimate #Technology "LMS" as AC3 <<application-component>>
+archimate #Technology "Основная банковская система" as AC4 <<application-component>>
+archimate #Technology "Система отчетности" as AC5 <<application-component>>
+archimate #Technology "Сервер баз данных" as AC6 <<database>>
+
+' Определение вложенности
+Rel_Composition_Down(BPF, BP1)
+Rel_Composition_Down(BPF, BP2)
+Rel_Composition_Down(BPF, BP3)
+Rel_Composition_Down(BPF, BP4)
+Rel_Composition_Down(BPF, BP5)
+Rel_Composition_Down(BPF, BP6)
+Rel_Composition_Down(BPF, BP7)
+
+' Бизнес-связи
+Rel_Triggering_Right(BE1, BP1)
+Rel_Assignment_Down(BR1, BE1)
+Rel_Assignment_Down(BR2, BP2)
+Rel_Assignment_Down(BR2, BP3)
+Rel_Assignment_Down(BR2, BP4)
+Rel_Assignment_Down(BR2, BP5)
+Rel_Assignment_Down(BR2, BP6)
+Rel_Assignment_Down(BR2, BP7)
+
+Rel_Flow_Right(BP1, BP2)
+Rel_Flow_Right(BP2, BP3)
+Rel_Flow_Right(BP3, BP4)
+Rel_Flow_Right(BP4, BP5)
+Rel_Flow_Right(BP5, BP6)
+Rel_Flow_Right(BP6, BP7)
+
+Rel_Access_Up(BP2, BO1)
+Rel_Access_Up(BP4, BO2)
+Rel_Access_Up(BP7, BO3)
+
+' Связи с сервисами
+Rel_Serving_Up(AS1, BP1)
+Rel_Serving_Up(AS2, BP2)
+Rel_Serving_Up(AS2, BP3)
+Rel_Serving_Up(AS3, BP5)
+Rel_Serving_Up(AS4, BP6)
+Rel_Serving_Up(AS4, BP7)
+
+' Связи сервисов с компонентами
+Rel_Realization_Up(AC1, AS1)
+Rel_Realization_Up(AC2, AS2)
+Rel_Realization_Up(AC3, AS3)
+Rel_Realization_Up(AC4, AS2)
+Rel_Realization_Up(AC5, AS4)
+Rel_Realization_Up(AC6, AC3)
+
+Rel_Realization_Up(AC6, AC1)
+Rel_Realization_Up(AC6, AC2)
+Rel_Realization_Up(AC6, AC4)
+Rel_Realization_Up(AC6, AC5)
+@enduml
