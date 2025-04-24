@@ -1,0 +1,57 @@
+@startuml
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+' Легенда
+node "Площадка клиента\n(Локальный ЦОД)" as OnPrem {
+  node "Оборудование клиента\n(серверы, маршрутизаторы)" as ClientHW
+
+  storage "СХД \n(ПДн, ФЗ-152)" as Graviton
+
+  node "Сервер приложений\n(локальный ЦОД)" as LocalServer {
+      database "DB1 с чувствтвительными\n данными (ПДн)" as LocalPSQL
+      database "DB2 с чувствтвительными\n данными (ПДн)" as LocalMongo
+  }
+}
+
+node "Точка присутствия\nYandex Cloud" as YCPresence {
+  ' node "Оборудование клиента\nв другом ЦОД (Co-location)" as ClientHW_YC
+  node "Оборудование\nYandex Cloud" as YCHW
+}
+
+cloud "Yandex Cloud" as YC {
+  node "VPC Network" {
+    node "Зона доступности 1\nru-central1-a" as AZ1 {
+      database "DB1 для работы\n сервиса" as CloudPSQL
+      database "DB2 для работы\n сервиса" as CloudMongo
+    }
+    node "Зона доступности 3\nru-central1-c" as AZ3 {
+      node "Приложения\n(обработка заявок,\nаналитика)" as App
+    }
+  }
+}
+
+' Связи
+ClientHW ---> YCHW : Каналы связи\nоператора
+
+' ClientHW --> ClientHW_YC : Каналы связи\nоператора
+' ClientHW_YC --> YCHW : Физическое подключение\n(ВОЛС)
+' ClientHW_YC --> YCHW : Логическое подключение\n(BGP)
+
+YCHW --> YC : Подключение к VPC
+
+' Локальные компоненты
+Graviton -down-> LocalPSQL
+Graviton -down-> LocalMongo
+LocalPSQL -down-> ClientHW : Доступ к ПДн
+LocalMongo -down-> ClientHW
+
+' Взаимодействие облачных компонентов
+App --> CloudPSQL
+App --> CloudMongo
+
+' При необходимости — доступ приложений к локальным БД
+App ..> LocalPSQL : Доступ к ПДн (через VPN)
+App ..> LocalMongo
+
+@enduml
