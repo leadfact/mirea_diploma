@@ -1,0 +1,114 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{micrasoft-azure-book}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=a20bcfda3699db22b1bc2e5fe6d39ba0}{%
+           family={Shanan},
+           familyi={S\bibinitperiod},
+           given={Robin},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e8a7ca2123c6898922153649a6453794}{%
+           family={Collier},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{fullhash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{fullhashraw}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{bibnamehash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{authorbibnamehash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{authornamehash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{authorfullhash}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \strng{authorfullhashraw}{d81d004e3dc7b0f3dea6bf668f57da50}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{268 с.}
+      \field{title}{Основы Micrasoft Azure}
+      \field{year}{2015}
+    \endentry
+    \entry{selectel-web}{online}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{note}{Selectel: Аренда места под сервер в дата-центре // URL: \url{https://selectel.ru/services/colocation/?section=products} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{selectel-block-storage}{online}{}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{note}{Selectel: Блоковое хранилище // URL: \url{https://selectel.ru/services/cloud/storage/?section=prices} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{graviton-site}{online}{}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{note}{Гравитон: О компании // URL: \url{https://graviton.ru} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{graiton-server-s2122iu}{online}{}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{note}{Технические характеристики сервера <<Гравитон>> С2122ИУ // URL: \url{https://graviton.ru/catalog/servery-i-khranenie-dannykh/servery/server-graviton-s2122iu} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{raidix-web}{online}{}{}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{note}{RAIDIX: Облачные решения // URL: \url{https://www.raidix.com/solutions/cloud} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{aquarius-aqbook-NE355}{online}{}{}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{note}{Описание и характеристики ноутбука Aquarius AQbook NE355 // URL: \url{https://www.aq.ru/product/aquarius-cmp-ne355} (дата обращения: 17.03.2025)}
+    \endentry
+    \entry{red-virtualization}{online}{}{}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{note}{РЕД Виртуализация: Система управления виртуализацией серверов и рабочих станций // URL: \url{https://redvirt.red-soft.ru} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{wmware}{online}{}{}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{note}{VMware для виртуализации // URL: \url{https://www.vmware.com} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{red-virtualization-system-requirements}{online}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{note}{РЕД Виртуализация: Системные требования // URL: \url{https://redvirt.red-soft.ru/base/red-virt/system-requirements-red-virt/hardware-rv} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{red-os}{online}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{note}{Ред ОС: Российская операционная система общего назначения для серверов и рабочих станций // URL: \url{https://redos.red-soft.ru} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{red-os-system-requirements}{online}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{note}{Ред ОС: Системные требования // URL: \url{https://redos.red-soft.ru/base/redos-7_3/7_3-install/7_3-sys-req} (дата обращения: 18.04.2025)}
+    \endentry
+    \entry{pfsense}{online}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{note}{Программный межсетевой экран pfSense // URL: \url{https://www.pfsense.org} (дата обращения: 18.04.2025)}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
