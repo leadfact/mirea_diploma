@@ -161,13 +161,13 @@
             <mxPoint x="36" y="51" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="zRx8wqQ9m-uIpZDr5qKo-122" value="&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;br&gt;pfSense" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
+        <mxCell id="zRx8wqQ9m-uIpZDr5qKo-122" value="&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;br&gt;Firewall" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
           <mxGeometry x="46.28708987161198" y="111" width="154.29029957203994" height="70" as="geometry" />
         </mxCell>
         <mxCell id="zRx8wqQ9m-uIpZDr5qKo-125" value="&amp;lt;&amp;lt;node&amp;gt;&amp;gt;&lt;br&gt;РЕД Вирт" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
           <mxGeometry x="255.49619115549217" y="50.5" width="165.83869472182596" height="290" as="geometry" />
         </mxCell>
-        <mxCell id="zRx8wqQ9m-uIpZDr5qKo-126" value="&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;br&gt;VM РЕД ОС" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
+        <mxCell id="zRx8wqQ9m-uIpZDr5qKo-126" value="&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;br&gt;Битрикс24" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
           <mxGeometry x="262.5093865905849" y="110.5" width="146.36071326676176" height="70" as="geometry" />
         </mxCell>
         <mxCell id="zRx8wqQ9m-uIpZDr5qKo-127" value="&amp;lt;&amp;lt;executionEnvironment&amp;gt;&amp;gt;&lt;br&gt;VM РЕД ОС" style="verticalAlign=top;align=center;shape=cube;size=10;direction=south;html=1;boundedLbl=1;spacingLeft=5;whiteSpace=wrap;" vertex="1" parent="zRx8wqQ9m-uIpZDr5qKo-72">
