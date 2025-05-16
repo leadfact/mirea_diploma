@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server
+    platform: linux/amd64
+    environment:
+      DB_SERVER_HOST: zabbix-mysql
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbixpass
+      MYSQL_DATABASE: zabbix
+    depends_on:
+      - zabbix-mysql
+    ports:
+      - "10051:10051"
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    container_name: zabbix-web
+    environment:
+      DB_SERVER_HOST: zabbix-mysql
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbixpass
+      MYSQL_DATABASE: zabbix
+      ZBX_SERVER_HOST: zabbix-server
+      PHP_TZ: Europe/Moscow
+    ports:
+      - "8080:8080"
+    depends_on:
+      - zabbix-server
+
+  zabbix-mysql:
+    image: mysql:5.7
+    container_name: zabbix-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbixpass
+    volumes:
+      - zabbix_mysql_data:/var/lib/mysql
+
+      #  bitrix24:
+      #    image: lookinio/bitrix:latest
+      #    container_name: bitrix24
+      #    ports:
+      #      - "8888:80"
+      #    environment:
+      #      MYSQL_ROOT_PASSWORD: rootpass
+      #    volumes:
+      #      - bitrix_data:/var/www/html
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      #- bitrix24
+      #- zabbix-web
+      - go-app1
+      - go-app2
+      - go-app3
+
+  go-app1:
+    build: ./go-hello
+    ports:
+      - "9001:8080"
+
+  go-app2:
+    build: ./go-hello
+    ports:
+      - "9002:8080"
+
+  go-app3:
+    build: ./go-hello
+    ports:
+      - "9003:8080"
+
+volumes:
+  zabbix_mysql_data:
+  bitrix_data:
+
