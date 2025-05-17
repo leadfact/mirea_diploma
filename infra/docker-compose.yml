@@ -11,16 +11,14 @@ services:
       MYSQL_DATABASE: zabbix
       ZBX_LOG_LEVEL: debug
     volumes:
-      - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
+      - ./zabbix/conf/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/lib/zabbix
+      - ./zabbix/log:/var/log/zabbix
+      - ./zabbix/run:/var/run/zabbix
     command: /usr/sbin/zabbix_server -f
-    # command: sh -c "mkdir -p /var/run/zabbix && /usr/sbin/zabbix_server -f"
     depends_on:
       zabbix-mysql:
         condition: service_healthy
-    tmpfs:
-      - /var/run/zabbix
-      - /var/log/zabbix
     ports:
       - "10051:10051"
 
@@ -35,7 +33,7 @@ services:
       ZBX_SERVER_HOST: zabbix-server
       PHP_TZ: Europe/Moscow
     volumes:
-      - ./zabbix/zabbix-web.conf:/etc/zabbix/web/zabbix.conf.php:ro
+      - ./zabbix/conf/zabbix-web.conf:/etc/zabbix/web/zabbix.conf.php:ro
     ports:
       - "8080:8080"
     depends_on:
