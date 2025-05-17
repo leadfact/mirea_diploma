@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+RUN apk add --no-cache python3 py3-pip openssh-client sshpass bash \
+    && pip3 install ansible
+
+WORKDIR /ansible
+
+ENTRYPOINT ["ansible-playbook"]

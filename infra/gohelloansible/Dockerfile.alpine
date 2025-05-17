@@ -1,13 +1,12 @@
 FROM alpine:latest
 
-RUN apk add --no-cache openssh go
-
-# Создаем пользователя и настраиваем SSH
-RUN adduser -D ansible && \
-    echo "ansible:ansible" | chpasswd && \
-    mkdir -p /home/ansible/.ssh && \
-    chown -R ansible:ansible /home/ansible/.ssh && \
-    echo "PermitRootLogin yes\nPasswordAuthentication yes\n" >> /etc/ssh/sshd_config
+RUN apk add --no-cache openssh go bash \
+    && adduser -D ansible \
+    && mkdir -p /home/ansible/.ssh \
+    && chown -R ansible:ansible /home/ansible/.ssh \
+    && echo "PermitRootLogin no" >> /etc/ssh/sshd_config \
+    && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config \
+    && echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
 
 EXPOSE 22
 

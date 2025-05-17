@@ -1,18 +1,39 @@
-- name: Deploy Go app to Alpine
+- name: Deploy Go app to Alpine via SSH key
   hosts: alpine
   vars:
     ansible_user: ansible
-    ansible_password: ansible
+    ansible_ssh_private_key_file: /root/.ssh/id_rsa
     ansible_connection: ssh
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   tasks:
-    - name: Copy Go files
+    - name: Ensure .ssh directory exists and copy authorized_keys
+      file:
+        path: /home/ansible/.ssh
+        state: directory
+        mode: '0700'
+        owner: ansible
+        group: ansible
+
+    - name: Copy public key to authorized_keys
+      authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+
+    - name: Copy Go source code to remote
       copy:
         src: /go-app/
         dest: /home/ansible/app/
+        owner: ansible
+        group: ansible
         mode: '0755'
 
-    - name: Run Go app
+    - name: Build Go app binary
       shell: |
         cd /home/ansible/app
-        go run main.go
+        go build -o myapp main.go
+
+    - name: Run Go app binary
+      shell: |
+        cd /home/ansible/app
+        ./myapp

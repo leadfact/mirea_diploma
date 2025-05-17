@@ -2,23 +2,26 @@ version: '3.8'
 
 services:
   alpine:
-    image: alpine:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
     container_name: alpine_target
     command: ["sh", "-c", "while true; do sleep 30; done"]
     networks:
       - ansible_net
     expose:
       - "22"
-    build:
-      context: .
-      dockerfile: ./Dockerfile.alpine
 
   ansible:
-    image: williamyeh/ansible:alpine3
+    build:
+      context: .
+      dockerfile: Dockerfile.ansible
     container_name: ansible_controller
     volumes:
       - ./ansible:/ansible
       - ./go-app:/go-app
+      - ~/.ssh/id_rsa.pub:/home/ansible/.ssh/id_rsa.pub:ro
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
     working_dir: /ansible
     networks:
       - ansible_net
