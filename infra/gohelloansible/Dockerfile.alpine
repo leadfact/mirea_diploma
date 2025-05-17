@@ -5,9 +5,8 @@ RUN apk add --no-cache openssh go bash \
     && mkdir -p /home/ansible/.ssh \
     && chown -R ansible:ansible /home/ansible/.ssh \
     && ssh-keygen -A \
-    && echo "PermitRootLogin no" >> /etc/ssh/sshd_config \
-    && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config \
-    && echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
+    && printf "PermitRootLogin no\nPasswordAuthentication no\nPubkeyAuthentication yes\n" >> /etc/ssh/sshd_config
+
 
 EXPOSE 22
 
