@@ -3,6 +3,10 @@ version: '3.1'
 networks:
   network-zabbix:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
 
 services:
   mysql:
@@ -159,3 +163,64 @@ services:
     restart: unless-stopped
     networks:
       - network-zabbix
+
+  freeipa:
+    container_name: freeipa
+    image: freeipa/freeipa-server:rocky-8
+    networks:
+      network-zabbix:
+        ipv4_address: 172.18.0.10
+    hostname: ipa.example.local
+    domainname: example.local
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    ports:
+      - "10080:80"    # HTTP (avoid conflict with nginx on 80)
+      - "10443:443"   # HTTPS (avoid conflict with nginx on 443)
+      - "389:389"     # LDAP
+      - "636:636"     # LDAPS
+      - "88:88"       # Kerberos TCP
+      - "464:464"     # Kerberos TCP
+      - "88:88/udp"   # Kerberos UDP
+      - "464:464/udp" # Kerberos UDP
+      - "123:123/udp" # NTP
+      - "7389:7389"   # Optional: Dogtag PKI
+      - "9443:9443"   # Optional: Dogtag PKI
+      - "9444:9444"   # Optional: Dogtag PKI
+      - "9445:9445"   # Optional: Dogtag PKI
+    environment:
+      - IPA_SERVER_HOSTNAME=ipa.example.local
+      - IPA_SERVER_IP=172.18.0.10  # Optional: Set a static IP in the network
+      - TZ=America/Sao_Paulo       # Match your timezone
+    command:
+      - echo "172.18.0.10 ipa.example.local" | sudo tee -a /etc/hosts
+      - ipa-server-install
+      - -U
+      - --domain=example.local
+      - --realm=EXAMPLE.LOCAL
+      - --ds-password=YourStrongPassword123
+      - --admin-password=YourStrongPassword123
+      - --http-pin=YourStrongPassword123
+      - --dirsrv-pin=YourStrongPassword123
+      - --no-host-dns
+      - --unattended
+      - --setup-dns           # Optional: Enable DNS
+      - --auto-forwarders     # Optional: Use external DNS forwarders
+      - --allow-zone-overlap  # Optional: Allow DNS zone overlap
+      - --no-dnssec-validation  # Optional: Disable DNSSEC
+    volumes:
+      - ./freeipa/data:/data
+      - ./freeipa/logs:/var/log
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.lo.disable_ipv6=0
+    cap_add:
+      - SYS_TIME
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    tmpfs:
+      - /run
+      - /tmp
