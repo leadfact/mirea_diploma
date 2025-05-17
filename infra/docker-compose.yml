@@ -15,8 +15,9 @@ services:
       - zabbix_server_data:/var/lib/zabbix
     command: >
       /bin/sh -c "
-        mkdir -p /var/run/zabbix &&
-        /usr/sbin/zabbix_server -f
+        mkdir -p /var/run/zabbix
+        chown zabbix:zabbix /var/run/zabbix
+        exec /usr/sbin/zabbix_server -f
       "
     depends_on:
       zabbix-mysql:
