@@ -150,6 +150,7 @@ services:
       - SERVERURL=213.171.25.166
       - SERVERPORT=51820
       - PEERS=client1
+      - PEERDNS=8.8.8.8
       - PEERDNS=auto
       - INTERNAL_SUBNET=10.13.13.0
     volumes:
