@@ -14,9 +14,12 @@ services:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/lib/zabbix
     command: /usr/sbin/zabbix_server -f
+    # command: sh -c "mkdir -p /var/run/zabbix && /usr/sbin/zabbix_server -f"
     depends_on:
       zabbix-mysql:
         condition: service_healthy
+    tmpfs:
+      - /var/run/zabbix
     ports:
       - "10051:10051"
 
