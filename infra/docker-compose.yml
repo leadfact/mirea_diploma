@@ -7,6 +7,9 @@ networks:
       config:
         - subnet: 172.20.0.0/16
 
+volumes:
+  freeipavol:
+
 services:
   mysql:
     container_name: mysql
