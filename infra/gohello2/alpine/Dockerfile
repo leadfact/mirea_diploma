@@ -1,19 +1,20 @@
 FROM alpine
 
-# Установка OpenSSH
+# Install OpenSSH
 RUN apk add --no-cache openssh
 
-# Генерация SSH ключей
+# Generate SSH keys
 RUN ssh-keygen -A
 
-# Установка пароля для root
+# Set root password
 RUN echo "root:password" | chpasswd
 
-# Разрешение входа root по паролю
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# Configure SSH
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
-# Открытие порта 22
+# Expose port 22
 EXPOSE 22
 
-# Запуск SSH сервера
+# Start SSH server
 CMD ["/usr/sbin/sshd", "-D"]
