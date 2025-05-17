@@ -20,6 +20,7 @@ services:
         condition: service_healthy
     tmpfs:
       - /var/run/zabbix
+      - /var/log/zabbix
     ports:
       - "10051:10051"
 
