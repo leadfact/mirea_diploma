@@ -5,7 +5,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.31.0.0/16
+        - subnet: 172.18.0.0/16
 
 services:
   mysql:
@@ -98,14 +98,6 @@ services:
       - ZBX_HOSTNAME=Zabbix server
       - ZBX_SERVER_HOST=172.18.0.1
 
-  applicaiton1:
-    container_name: app1
-    image: alpine:latest
-    networks:
-      - network-zabbix
-    ports:
-      - "9001:8080"
-
   go-app1:
     build: ./go-hello1
     networks:
@@ -124,7 +116,7 @@ services:
     build: ./go-hello3
     networks:
       network-zabbix:
-        ipv4_address: 172.31.0.23
+        ipv4_address: 172.18.0.23
     ports:
       - "9003:8080"
 
