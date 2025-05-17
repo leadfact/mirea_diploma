@@ -5,8 +5,8 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.18.0.0/16
-          gateway: 172.18.0.1
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1
 
 services:
   mysql:
@@ -169,7 +169,7 @@ services:
     image: freeipa/freeipa-server:rocky-8
     networks:
       network-zabbix:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.21.0.10
     hostname: ipa.example.local
     domainname: example.local
     restart: unless-stopped
@@ -191,10 +191,10 @@ services:
       - "9445:9445"   # Optional: Dogtag PKI
     environment:
       - IPA_SERVER_HOSTNAME=ipa.example.local
-      - IPA_SERVER_IP=172.18.0.10  # Optional: Set a static IP in the network
+      - IPA_SERVER_IP=172.21.0.10  # Optional: Set a static IP in the network
       - TZ=America/Sao_Paulo       # Match your timezone
     command:
-      - echo "172.18.0.10 ipa.example.local" | sudo tee -a /etc/hosts
+      - echo "172.21.0.10 ipa.example.local" | sudo tee -a /etc/hosts
       - ipa-server-install
       - -U
       - --domain=example.local
