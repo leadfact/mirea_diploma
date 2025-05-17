@@ -12,10 +12,11 @@ services:
     volumes:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/run/zabbix
+      - zabbix_server_logs:/var/log/zabbix
     command: >
-      bash -c "mkdir -p /var/run/zabbix && 
-      chown -R zabbix:zabbix /var/run/zabbix && 
-      chmod 755 /var/run/zabbix && 
+      bash -c "mkdir -p /var/run/zabbix /var/log/zabbix && 
+      chown -R zabbix:zabbix /var/run/zabbix /var/log/zabbix && 
+      chmod 755 /var/run/zabbix /var/log/zabbix && 
       /usr/sbin/zabbix_server -f"
     depends_on:
       zabbix-mysql:
@@ -102,4 +103,5 @@ volumes:
   zabbix_mysql_data:
   bitrix_data:
   zabbix_server_data:
+  zabbix_server_logs:
 
