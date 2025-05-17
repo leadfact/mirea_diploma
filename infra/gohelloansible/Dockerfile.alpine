@@ -1,8 +1,10 @@
 FROM alpine:latest
 
 RUN apk add --no-cache openssh go bash \
+    && adduser -D ansible \
     && mkdir -p /home/ansible/.ssh \
     && chown -R ansible:ansible /home/ansible/.ssh \
+    && ssh-keygen -A \
     && echo "PermitRootLogin no" >> /etc/ssh/sshd_config \
     && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config \
     && echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
