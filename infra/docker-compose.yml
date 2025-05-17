@@ -18,7 +18,6 @@ services:
       chmod 755 /var/run/zabbix && 
       /usr/sbin/zabbix_server -f"
     depends_on:
-      - zabbix-mysql
       zabbix-mysql:
         condition: service_healthy
     ports:
@@ -39,7 +38,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - zabbix-mysql
       zabbix-mysql:
         condition: service_healthy
       zabbix-server:
