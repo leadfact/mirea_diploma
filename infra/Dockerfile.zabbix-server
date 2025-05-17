@@ -1,5 +1,8 @@
 FROM zabbix/zabbix-server-mysql:latest
 
+# Switch to root for installation
+USER root
+
 # Install gosu
 RUN apk add --no-cache gosu
 
