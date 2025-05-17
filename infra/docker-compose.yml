@@ -167,7 +167,7 @@ services:
   freeipa:
     image: freeipa/freeipa-server:centos-8
     restart: unless-stopped
-    network:
+    networks:
       - network-zabbix
     hostname: freeipa.packops.local
     environment:
