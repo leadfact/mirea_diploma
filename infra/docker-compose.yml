@@ -62,7 +62,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - bitrix24
+      # - bitrix24
       - zabbix-web
       - go-app1
       - go-app2
