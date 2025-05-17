@@ -13,12 +13,12 @@ services:
     volumes:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/run/zabbix
-      - zabbix_server_logs:/var/log/zabbix
+      - ./zabbix/logs:/var/log/zabbix
     command: >
       sh -c "mkdir -p /var/run/zabbix /var/log/zabbix &&
              chown -R zabbix:zabbix /var/run/zabbix /var/log/zabbix &&
              chmod 755 /var/run/zabbix /var/log/zabbix &&
-             /usr/sbin/zabbix_server -f"
+             /usr/sbin/zabbix_server -f -v"
     depends_on:
       zabbix-mysql:
         condition: service_healthy
