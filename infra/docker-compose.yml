@@ -15,8 +15,8 @@ services:
       - zabbix_server_data:/var/lib/zabbix
     command: /usr/sbin/zabbix_server -f
     depends_on:
-      zabbix-db-init:
-        condition: service_completed_successfully
+      zabbix-mysql:
+        condition: service_healthy
     ports:
       - "10051:10051"
 
@@ -55,21 +55,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
-  zabbix-db-init:
-    image: zabbix/zabbix-server-mysql:latest
-    container_name: zabbix-db-init
-    environment:
-      DB_SERVER_HOST: zabbix-mysql
-      MYSQL_USER: zabbix
-      MYSQL_PASSWORD: zabbixpass
-      MYSQL_DATABASE: zabbix
-    command: >
-      sh -c "sleep 10 &&
-             /usr/share/doc/zabbix-server-mysql*/create.sql.gz | gunzip | mysql -h zabbix-mysql -u zabbix -pzabbixpass zabbix"
-    depends_on:
-      zabbix-mysql:
-        condition: service_healthy
 
   # bitrix24:
   #   image: lookinio/bitrix:latest
