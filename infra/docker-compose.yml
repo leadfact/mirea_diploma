@@ -106,12 +106,6 @@ services:
     ports:
       - "9001:8080"
 
-  ansible:
-    container_name: ansible
-    image: ansible/ansible:latest
-    networks:
-      - network-zabbix
-
   go-app1:
     build: ./go-hello1
     networks:
