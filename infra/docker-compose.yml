@@ -17,7 +17,7 @@ services:
       bash -c "mkdir -p /var/run/zabbix && 
       chown -R zabbix:zabbix /var/run/zabbix && 
       chmod 755 /var/run/zabbix && 
-      su - zabbix -c '/usr/sbin/zabbix_server -f'"
+      gosu zabbix /usr/sbin/zabbix_server -f"
     depends_on:
       - zabbix-mysql
     ports:
