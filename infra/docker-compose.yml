@@ -165,54 +165,48 @@ services:
       - network-zabbix
 
   freeipa:
-      container_name: freeipa
-      image: freeipa/freeipa-server:rocky-8
-      networks:
-        network-zabbix:
-          ipv4_address: 172.20.0.10
-      hostname: ipa.example.local
-      domainname: example.local
-      restart: unless-stopped
-      tty: true
-      stdin_open: true
-      privileged: true  # Required for systemd to manage cgroups
-      ports:
-        - "10080:80"    # HTTP
-        - "10443:443"   # HTTPS
-        - "389:389"     # LDAP
-        - "636:636"     # LDAPS
-        - "88:88"       # Kerberos TCP
-        - "464:464"     # Kerberos TCP
-        - "88:88/udp"   # Kerberos UDP
-        - "464:464/udp" # Kerberos UDP
-        - "123:123/udp" # NTP
-      environment:
-        - IPA_SERVER_HOSTNAME=ipa.example.local
-        - IPA_SERVER_IP=172.20.0.10
-        - TZ=America/Sao_Paulo
-      command:
-        - ipa-server-install
-        - -U
-        - --domain=example.local
-        - --realm=EXAMPLE.LOCAL
-        - --ds-password=YourStrongPassword123
-        - --admin-password=YourStrongPassword123
-        - --no-host-dns
-        - --unattended
-        - --setup-dns
-        - --auto-forwarders
-        - --no-dnssec-validation
-      volumes:
-        - ./freeipa/data:/data:rw
-        - ./freeipa/logs:/var/log:rw
-        - /sys/fs/cgroup:/sys/fs/cgroup:rw  # Writable cgroup mount for systemd
-      cap_add:
-        - SYS_ADMIN  # Required for cgroup management
-        - SYS_TIME
-        - NET_ADMIN
-      security_opt:
-        - seccomp:unconfined
-      tmpfs:
-        - /run
-        - /tmp
-        - /run/lock  # Required for systemd
+    image: freeipa/freeipa-server:centos-8
+    restart: unless-stopped
+    network:
+      - network-zabbix
+    hostname: freeipa.packops.local
+    environment:
+      IPA_SERVER_HOSTNAME: freeipa.packops.local
+      TZ: "Asia/Tehran"
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - freeipavol:/data
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.lo.disable_ipv6=0
+    security_opt:
+      - "seccomp:unconfined"
+    command:
+      - -U
+      - --domain=packops.local
+      - --realm=packops.local
+      - --http-pin=YOURPASSWORD
+      - --dirsrv-pin=YOURPASSWORDe
+      - --ds-password=YOURPASSWORD
+      - --admin-password=YOURPASSWORD
+      - --no-host-dns
+      - --unattended
+    ports:
+      - "10080:80"    # HTTP
+      - "10443:443"   # HTTPS
+      - "389:389"
+      - "636:636"
+      - "88:88"
+      - "464:464"
+      - "88:88/udp"
+      - "464:464/udp"
+      - "123:123/udp"
+      - "7389:7389"
+      - "9443:9443"
+      - "9444:9444"
+      - "9445:9445"
