@@ -12,14 +12,15 @@ services:
     volumes:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/run/zabbix
-    user: root
     command: >
       bash -c "mkdir -p /var/run/zabbix && 
       chown -R zabbix:zabbix /var/run/zabbix && 
       chmod 755 /var/run/zabbix && 
-      gosu zabbix /usr/sbin/zabbix_server -f"
+      /usr/sbin/zabbix_server -f"
     depends_on:
       - zabbix-mysql
+      zabbix-mysql:
+        condition: service_healthy
     ports:
       - "10051:10051"
 
@@ -38,7 +39,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - zabbix-server
+      - zabbix-mysql
+      zabbix-mysql:
+        condition: service_healthy
+      zabbix-server:
+        condition: service_started
 
   zabbix-mysql:
     image: mysql:5.7
@@ -50,6 +55,11 @@ services:
       MYSQL_PASSWORD: zabbixpass
     volumes:
       - zabbix_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # bitrix24:
   #   image: lookinio/bitrix:latest
