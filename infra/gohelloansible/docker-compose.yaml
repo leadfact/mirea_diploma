@@ -28,6 +28,8 @@ services:
     depends_on:
       - alpine
     tty: true
+    stdin_open: true
+    command: ["sh", "-c", "while true; do sleep 3600; done"]
 
 networks:
   ansible_net:
