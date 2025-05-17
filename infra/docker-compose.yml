@@ -164,45 +164,45 @@ services:
     networks:
       - network-zabbix
 
-freeipa:
-  container_name: freeipa
-  image: freeipa/freeipa-server:rocky-8
-  networks:
-    network-zabbix:
-      ipv4_address: 172.20.0.10
-  hostname: ipa.example.local
-  domainname: example.local
-  restart: unless-stopped
-  tty: true
-  stdin_open: true
-  privileged: true
-  volumes:
-    - ./freeipa/data:/data:rw
-    - ./freeipa/logs:/var/log:rw
-    - /sys/fs/cgroup:/sys/fs/cgroup:ro  # Mount cgroup filesystem as read-only
-  ports:
-    - "10080:80"    # HTTP
-    - "10443:443"   # HTTPS
-    - "389:389"     # LDAP
-    - "636:636"     # LDAPS
-    - "88:88"       # Kerberos TCP
-    - "464:464"     # Kerberos TCP
-    - "88:88/udp"   # Kerberos UDP
-    - "464:464/udp" # Kerberos UDP
-    - "123:123/udp" # NTP
-  environment:
-    - IPA_SERVER_HOSTNAME=ipa.example.local
-    - IPA_SERVER_IP=172.20.0.10
-    - TZ=America/Sao_Paulo
-  command:
-    - /sbin/init  # Use systemd as the entrypoint
-  cap_add:
-    - SYS_ADMIN
-    - SYS_TIME
-    - NET_ADMIN
-  security_opt:
-    - seccomp:unconfined
-  tmpfs:
-    - /run
-    - /tmp
-    - /run/lock
+  freeipa:
+    container_name: freeipa
+    image: freeipa/freeipa-server:rocky-8
+    networks:
+      network-zabbix:
+        ipv4_address: 172.20.0.10
+    hostname: ipa.example.local
+    domainname: example.local
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    privileged: true
+    volumes:
+      - ./freeipa/data:/data:rw
+      - ./freeipa/logs:/var/log:rw
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro  # Mount cgroup filesystem as read-only
+    ports:
+      - "10080:80"    # HTTP
+      - "10443:443"   # HTTPS
+      - "389:389"     # LDAP
+      - "636:636"     # LDAPS
+      - "88:88"       # Kerberos TCP
+      - "464:464"     # Kerberos TCP
+      - "88:88/udp"   # Kerberos UDP
+      - "464:464/udp" # Kerberos UDP
+      - "123:123/udp" # NTP
+    environment:
+      - IPA_SERVER_HOSTNAME=ipa.example.local
+      - IPA_SERVER_IP=172.20.0.10
+      - TZ=America/Sao_Paulo
+    command:
+      - /sbin/init  # Use systemd as the entrypoint
+    cap_add:
+      - SYS_ADMIN
+      - SYS_TIME
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    tmpfs:
+      - /run
+      - /tmp
+      - /run/lock
