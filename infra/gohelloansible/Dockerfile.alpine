@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN apk add --no-cache openssh go bash \
-    && adduser -D ansible \
+    && id -u ansible || adduser -D ansible \
     && mkdir -p /home/ansible/.ssh \
     && chown -R ansible:ansible /home/ansible/.ssh \
     && ssh-keygen -A \
