@@ -5,8 +5,15 @@ RUN apk add --no-cache openssh go bash \
     && mkdir -p /home/ansible/.ssh \
     && chown -R ansible:ansible /home/ansible/.ssh \
     && ssh-keygen -A \
-    && printf "PermitRootLogin no\nPasswordAuthentication no\nPubkeyAuthentication yes\n" >> /etc/ssh/sshd_config
-
+    && printf '%s\n' \
+       'Port 22' \
+       'PermitRootLogin no' \
+       'PasswordAuthentication no' \
+       'PubkeyAuthentication yes' \
+       'ChallengeResponseAuthentication no' \
+       'UsePAM no' \
+       'Subsystem sftp /usr/lib/ssh/sftp-server' \
+       > /etc/ssh/sshd_config
 
 EXPOSE 22
 
