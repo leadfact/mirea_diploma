@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   zabbix-server:
-    build:
-      context: .
-      dockerfile: Dockerfile.zabbix-server
+    image: zabbix/zabbix-server-mysql:latest
     container_name: zabbix-server
     environment:
       DB_SERVER_HOST: zabbix-mysql
@@ -15,8 +13,11 @@ services:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/run/zabbix
       - zabbix_server_logs:/var/log/zabbix
-    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
-    command: /usr/sbin/zabbix_server -f
+    command: >
+      sh -c "mkdir -p /var/run/zabbix /var/log/zabbix &&
+             chown -R zabbix:zabbix /var/run/zabbix /var/log/zabbix &&
+             chmod 755 /var/run/zabbix /var/log/zabbix &&
+             /usr/sbin/zabbix_server -f"
     depends_on:
       zabbix-mysql:
         condition: service_healthy
