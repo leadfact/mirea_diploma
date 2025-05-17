@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  alpine:
+    image: alpine:latest
+    container_name: alpine_target
+    command: ["sh", "-c", "while true; do sleep 30; done"]
+    networks:
+      - ansible_net
+    expose:
+      - "22"
+    build:
+      context: .
+      dockerfile: ./Dockerfile.alpine
+
+  ansible:
+    image: williamyeh/ansible:alpine3
+    container_name: ansible_controller
+    volumes:
+      - ./ansible:/ansible
+      - ./go-app:/go-app
+    working_dir: /ansible
+    networks:
+      - ansible_net
+    depends_on:
+      - alpine
+    tty: true
+
+networks:
+  ansible_net:
+    driver: bridge

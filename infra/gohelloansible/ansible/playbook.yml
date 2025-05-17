@@ -1,0 +1,18 @@
+- name: Deploy Go app to Alpine
+  hosts: alpine
+  vars:
+    ansible_user: ansible
+    ansible_password: ansible
+    ansible_connection: ssh
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Copy Go files
+      copy:
+        src: /go-app/
+        dest: /home/ansible/app/
+        mode: '0755'
+
+    - name: Run Go app
+      shell: |
+        cd /home/ansible/app
+        go run main.go
