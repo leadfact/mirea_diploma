@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: zabbix
     volumes:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
+      - zabbix_server_data:/var/run/zabbix
     depends_on:
       - zabbix-mysql
     ports:
@@ -86,4 +87,5 @@ services:
 volumes:
   zabbix_mysql_data:
   bitrix_data:
+  zabbix_server_data:
 
