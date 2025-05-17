@@ -3,4 +3,7 @@ FROM alpine:latest
 RUN apk add --no-cache python3 py3-pip openssh-client sshpass bash \
     && pip3 install --break-system-packages ansible
 
+COPY ~/.ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+
 WORKDIR /ansible
