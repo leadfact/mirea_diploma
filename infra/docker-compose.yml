@@ -49,8 +49,8 @@ services:
       - mysql
     restart: always
     ports:
-      - '80:8080'
-      - '443:8443'
+      - '8080:8080'
+      - '8443:8443'
     environment:
       - DB_SERVER_HOST=mysql
       - MYSQL_DATABASE=zabbix
@@ -103,8 +103,8 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - './nginx/nginx.conf:/etc/nginx/nginx.conf:ro'  # Mount NGINX config
-      - './nginx/ssl:/etc/nginx/ssl:ro'               # Mount SSL certificates
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './nginx/ssl:/etc/nginx/ssl:ro'
     depends_on:
       - zabbix-frontend
       - grafana
