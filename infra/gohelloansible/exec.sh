@@ -1,1 +1,2 @@
-docker exec -it ansible_controller ansible-playbook -i ansible/inventory.ini ansible/playbook.yml
+cd ansible
+docker exec -it ansible_controller ansible-playbook -i inventory.ini playbook.yml
