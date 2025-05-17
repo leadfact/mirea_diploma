@@ -19,8 +19,8 @@ services:
     volumes:
       - ./ansible:/ansible
       - ./go-app:/go-app
-      - ~/.ssh/id_rsa.pub:/home/ansible/.ssh/id_rsa.pub:ro
-      - ~/.ssh/id_rsa:/home/ansible/.ssh/id_rsa:ro
+      - ~/.ssh/id_rsa.pub:/root/.ssh/.ssh/id_rsa.pub:ro
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
     working_dir: /ansible
     networks:
       - ansible_net
