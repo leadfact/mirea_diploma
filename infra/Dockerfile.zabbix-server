@@ -1,15 +1,8 @@
 FROM zabbix/zabbix-server-mysql:latest
 
-# Switch to root for installation
-USER root
-
-# Install gosu
-RUN apk add --no-cache gosu
-
-# Create necessary directories and set permissions
-RUN mkdir -p /var/run/zabbix /var/log/zabbix && \
-    chown -R zabbix:zabbix /var/run/zabbix /var/log/zabbix && \
-    chmod 755 /var/run/zabbix /var/log/zabbix
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Switch to zabbix user
 USER zabbix 

@@ -15,6 +15,7 @@ services:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/run/zabbix
       - zabbix_server_logs:/var/log/zabbix
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
     command: /usr/sbin/zabbix_server -f
     depends_on:
       zabbix-mysql:
