@@ -193,7 +193,6 @@ services:
       - IPA_SERVER_IP=172.20.0.10  # Optional: Set a static IP in the network
       - TZ=America/Sao_Paulo       # Match your timezone
     command:
-      - echo "172.20.0.10 ipa.example.local" >> /etc/hosts
       - ipa-server-install
       - -U
       - --domain=example.local
