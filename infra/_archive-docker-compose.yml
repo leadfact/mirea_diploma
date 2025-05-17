@@ -1,19 +1,15 @@
-version: '3.1'
-
-networks:
-  network-zabbix:
-    driver: bridge
+version: '3.8'
 
 services:
   mysql:
     container_name: mysql
-    image: mysql:5.7
+    image: mysql:8.0
     networks:
       - network-zabbix
     ports:
       - '3306:3306'
     volumes:
-      - './zabbix/mysql:/var/lib/data'
+      - './zabbix/mysql:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=carryontech
       - MYSQL_DATABASE=zabbix
@@ -22,7 +18,7 @@ services:
 
   zabbix-server:
     container_name: zabbix-server
-    image: zabbix/zabbix-server-mysql:ubuntu-5.0.1
+    image: zabbix/zabbix-server-mysql:ubuntu-latest
     networks:
       - network-zabbix
     links:
@@ -42,15 +38,15 @@ services:
 
   zabbix-frontend:
     container_name: zabbix-frontend
-    image: zabbix/zabbix-web-apache-mysql:ubuntu-5.0.1
+    image: zabbix/zabbix-web-apache-mysql:ubuntu-latest
     networks:
       - network-zabbix
     links:
       - mysql
     restart: always
     ports:
-      - '80:8080'
-      - '443:8443'
+      - '8080:80'
+      - '443:443'
     environment:
       - DB_SERVER_HOST=mysql
       - MYSQL_DATABASE=zabbix
@@ -59,10 +55,10 @@ services:
       - PHP_TZ=America/Sao_Paulo
     depends_on:
       - mysql
-   
+
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     networks:
       - network-zabbix
     links:
@@ -71,21 +67,20 @@ services:
     restart: always
     ports:
       - '3000:3000'
-    environment: 
+    environment:
       - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app
     depends_on:
       - mysql
       - zabbix-server
+
   zabbix-agent:
     container_name: zabbix-agent
-    image: zabbix/zabbix-agent2:alpine-5.0.1
-    user: root
+    image: zabbix/zabbix-agent2:alpine-latest
     networks:
       - network-zabbix
     links:
       - zabbix-server
     restart: always
-    privileged: true
     volumes:
       - /var/run:/var/run
     ports:
@@ -94,18 +89,52 @@ services:
       - ZBX_HOSTNAME=Zabbix server
       - ZBX_SERVER_HOST=172.18.0.1
 
+    # bitrix24:
+  #   image: lookinio/bitrix:latest
+  #   container_name: bitrix24
+  #   ports:
+  #     - "8888:80"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpass
+  #   volumes:
+  #     - bitrix_data:/var/www/html
+
   nginx:
-    container_name: nginx
     image: nginx:latest
+    container_name: nginx
     networks:
       - network-zabbix
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
     volumes:
-      - './nginx/nginx.conf:/etc/nginx/nginx.conf:ro'  # Mount NGINX config
-      - './nginx/ssl:/etc/nginx/ssl:ro'               # Mount SSL certificates
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - zabbix-frontend
-      - grafana
-    restart: always
+      - go-app1
+      - go-app2
+      - go-app3
+
+  go-app1:
+    build: ./go-hello1
+    networks:
+      - network-zabbix
+    ports:
+      - "9001:8080"
+
+  go-app2:
+    build: ./go-hello2
+    networks:
+      - network-zabbix
+    ports:
+      - "9002:8080"
+
+  go-app3:
+    build: ./go-hello3
+    networks:
+      - network-zabbix
+    ports:
+      - "9003:8080"
+
+networks:
+  network-zabbix:
+    driver: bridge
