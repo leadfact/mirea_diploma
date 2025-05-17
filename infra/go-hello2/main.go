@@ -6,7 +6,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "Hello from Go App 1!")
+    fmt.Fprintln(w, "Hello from Go App 2!")
 }
 
 func main() {
