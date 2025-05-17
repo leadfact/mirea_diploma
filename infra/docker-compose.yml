@@ -13,6 +13,7 @@ services:
     volumes:
       - ./zabbix/conf/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/lib/zabbix
+      - zabbix_server_run:/var/run/zabbix
     command: sh -c "chown -R zabbix:zabbix /var/run/zabbix && /usr/sbin/zabbix_server -f"
     depends_on:
       zabbix-mysql:
@@ -99,3 +100,4 @@ volumes:
   zabbix_mysql_data:
   bitrix_data:
   zabbix_server_data:
+  zabbix_server_run:
