@@ -95,6 +95,27 @@ services:
       - ZBX_HOSTNAME=Zabbix server
       - ZBX_SERVER_HOST=172.18.0.1
 
+  go-app1:
+    build: ./go-hello1
+    networks:
+      - network-zabbix
+    ports:
+      - "9001:8080"
+
+  go-app2:
+    build: ./go-hello2
+    networks:
+      - network-zabbix
+    ports:
+      - "9002:8080"
+
+  go-app3:
+    build: ./go-hello3
+    networks:
+      - network-zabbix
+    ports:
+      - "9003:8080"
+
   nginx:
     container_name: nginx
     image: nginx:latest
@@ -108,4 +129,7 @@ services:
     depends_on:
       - zabbix-frontend
       - grafana
+      - go-app1
+      - go-app2
+      - go-app3
     restart: always
