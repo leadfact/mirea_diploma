@@ -13,12 +13,8 @@ services:
     volumes:
       - ./zabbix/conf/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/lib/zabbix
-    command: >
-      /bin/sh -c "
-        mkdir -p /var/run/zabbix
-        chown zabbix:zabbix /var/run/zabbix
-        exec /usr/sbin/zabbix_server -f
-      "
+      - ./zabbix/zabbix-entrypoint.sh:/zabbix-entrypoint.sh:ro
+    entrypoint: ["/zabbix-entrypoint.sh"]
     depends_on:
       zabbix-mysql:
         condition: service_healthy
