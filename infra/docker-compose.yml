@@ -3,6 +3,9 @@ version: '3.1'
 networks:
   network-zabbix:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
 
 services:
   mysql:
@@ -109,26 +112,27 @@ services:
     networks:
       - network-zabbix
 
-  # go-app1:
-  #   build: ./go-hello1
-  #   networks:
-  #     - network-zabbix
-  #   ports:
-  #     - "9001:8080"
+  go-app1:
+    build: ./go-hello1
+    networks:
+      - network-zabbix
+    ports:
+      - "9001:8080"
 
-  # go-app2:
-  #   build: ./go-hello2
-  #   networks:
-  #     - network-zabbix
-  #   ports:
-  #     - "9002:8080"
+  go-app2:
+    build: ./go-hello2
+    networks:
+      - network-zabbix
+    ports:
+      - "9002:8080"
 
-  # go-app3:
-  #   build: ./go-hello3
-  #   networks:
-  #     - network-zabbix
-  #   ports:
-  #     - "9003:8080"
+  go-app3:
+    build: ./go-hello3
+    networks:
+      network-zabbix:
+        ipv4_address: 172.18.0.23
+    ports:
+      - "9003:8080"
 
   nginx:
     container_name: nginx
@@ -147,3 +151,29 @@ services:
       - go-app2
       - go-app3
     restart: always
+
+  wireguard:
+    container_name: wireguard
+    image: linuxserver/wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - SERVERURL=213.171.25.166
+      - SERVERPORT=51820
+      - PEERS=client1
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+    volumes:
+      - ./wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      - network-zabbix
