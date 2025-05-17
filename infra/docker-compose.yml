@@ -9,11 +9,10 @@ services:
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: zabbixpass
       MYSQL_DATABASE: zabbix
-      ZBX_LOG_LEVEL: debug
+      ZBX_LOG_LEVEL: trace
     volumes:
       - ./zabbix/conf/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
       - zabbix_server_data:/var/lib/zabbix
-      - zabbix_server_run:/var/run/zabbix
     command: /usr/sbin/zabbix_server -f
     depends_on:
       zabbix-mysql:
@@ -100,4 +99,3 @@ volumes:
   zabbix_mysql_data:
   bitrix_data:
   zabbix_server_data:
-  zabbix_server_run:
