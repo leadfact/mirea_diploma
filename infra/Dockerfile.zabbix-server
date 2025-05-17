@@ -1,9 +1,7 @@
 FROM zabbix/zabbix-server-mysql:latest
 
 # Install gosu
-RUN apt-get update && \
-    apt-get install -y gosu && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache gosu
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/run/zabbix /var/log/zabbix && \
