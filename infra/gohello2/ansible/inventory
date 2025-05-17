@@ -1,0 +1,2 @@
+[alpine]
+alpine ansible_host=alpine ansible_user=root ansible_password=password ansible_port=22

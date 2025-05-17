@@ -1,0 +1,21 @@
+- hosts: alpine
+  tasks:
+    - name: Install Go
+      apk:
+        name: go
+        state: present
+
+    - name: Copy Go app directory
+      copy:
+        src: /go/code/
+        dest: /root/go-app/
+
+    - name: Install Go dependencies
+      command: go mod tidy
+      args:
+        chdir: /root/go-app
+
+    - name: Run Go app
+      command: go run main.go
+      args:
+        chdir: /root/go-app
