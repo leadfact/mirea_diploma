@@ -1,21 +1,40 @@
 - hosts: alpine
+  gather_facts: no
   tasks:
+    - name: Wait for SSH to be available
+      wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        timeout: 300
+        delay: 10
+
     - name: Install Go
       apk:
         name: go
         state: present
+      become: yes
+
+    - name: Create Go app directory
+      file:
+        path: /root/go-app
+        state: directory
+        mode: '0755'
+      become: yes
 
     - name: Copy Go app directory
       copy:
         src: /go/code/
         dest: /root/go-app/
+      become: yes
 
     - name: Install Go dependencies
       command: go mod tidy
       args:
         chdir: /root/go-app
+      become: yes
 
     - name: Run Go app
       command: go run main.go
       args:
         chdir: /root/go-app
+      become: yes

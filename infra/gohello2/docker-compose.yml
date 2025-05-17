@@ -4,5 +4,17 @@ services:
     build: ./ansible
     volumes:
       - ./go-app:/go/code
+    networks:
+      - app-network
+    depends_on:
+      - alpine
+
   alpine:
     build: ./alpine
+    networks:
+      - app-network
+    hostname: alpine
+
+networks:
+  app-network:
+    driver: bridge
