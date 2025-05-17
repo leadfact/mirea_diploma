@@ -186,7 +186,6 @@ services:
         - "88:88/udp"   # Kerberos UDP
         - "464:464/udp" # Kerberos UDP
         - "123:123/udp" # NTP
-        - "53:53/tcp"   # DNS
       environment:
         - IPA_SERVER_HOSTNAME=ipa.example.local
         - IPA_SERVER_IP=172.20.0.10
