@@ -1,0 +1,55 @@
+---
+- name: Deploy monitoring infrastructure
+  hosts: monitoring
+  become: yes
+  vars:
+    go_apps_root: /opt/monitoring/go-apps
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Python module
+      pip:
+        name: docker
+        state: present
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Create monitoring directory
+      file:
+        path: "{{ go_apps_root }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../docker-compose.yml
+        dest: /opt/monitoring/docker-compose.yml
+        mode: '0644'
+
+    - name: Copy nginx configuration
+      copy:
+        src: ../nginx/nginx.conf
+        dest: /opt/monitoring/nginx/nginx.conf
+        mode: '0644'
+
+    - name: Include Go apps role
+      include_role:
+        name: go-apps
+
+    - name: Start all Docker containers
+      docker_compose:
+        project_src: /opt/monitoring
+        state: present
+        build: yes 

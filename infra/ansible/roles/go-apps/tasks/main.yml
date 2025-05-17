@@ -1,0 +1,40 @@
+---
+- name: Create Go apps directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - "{{ go_apps_root }}/go-hello1"
+    - "{{ go_apps_root }}/go-hello2"
+    - "{{ go_apps_root }}/go-hello3"
+
+- name: Copy Go application source files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ go_apps_root }}/{{ item.dest }}"
+    mode: '0644'
+  with_items:
+    - { src: 'go-hello1/main.go', dest: 'go-hello1/main.go' }
+    - { src: 'go-hello1/go.mod', dest: 'go-hello1/go.mod' }
+    - { src: 'go-hello2/main.go', dest: 'go-hello2/main.go' }
+    - { src: 'go-hello2/go.mod', dest: 'go-hello2/go.mod' }
+    - { src: 'go-hello3/main.go', dest: 'go-hello3/main.go' }
+    - { src: 'go-hello3/go.mod', dest: 'go-hello3/go.mod' }
+
+- name: Copy Dockerfiles
+  template:
+    src: Dockerfile.j2
+    dest: "{{ go_apps_root }}/{{ item }}/Dockerfile"
+    mode: '0644'
+  with_items:
+    - go-hello1
+    - go-hello2
+    - go-hello3
+
+- name: Build and start Docker containers
+  docker_compose:
+    project_src: "{{ go_apps_root }}"
+    state: present
+    build: yes
+    remove_orphans: yes 
