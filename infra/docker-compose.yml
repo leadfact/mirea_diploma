@@ -45,7 +45,7 @@ services:
       - mysql
     restart: always
     ports:
-      - '80:80'
+      - '8080:80'
       - '443:443'
     environment:
       - DB_SERVER_HOST=mysql
