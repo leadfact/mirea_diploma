@@ -11,9 +11,7 @@ RUN apk add --no-cache openssh go bash \
        'PasswordAuthentication no' \
        'PubkeyAuthentication yes' \
        'ChallengeResponseAuthentication no' \
-       'UsePAM no' \
-       'Subsystem sftp /usr/lib/ssh/sftp-server' \
-       > /etc/ssh/sshd_config
+       >> /etc/ssh/sshd_config
 
 EXPOSE 22
 
