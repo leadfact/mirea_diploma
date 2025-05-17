@@ -12,13 +12,8 @@ services:
       ZBX_LOG_LEVEL: debug
     volumes:
       - ./zabbix/zabbix-server.conf:/etc/zabbix/zabbix_server.conf:ro
-      - zabbix_server_data:/var/run/zabbix
-      - ./zabbix/logs:/var/log/zabbix
-    command: >
-      sh -c "mkdir -p /var/run/zabbix /var/log/zabbix &&
-             chmod 755 /var/run/zabbix /var/log/zabbix &&
-             sleep 10 &&
-             /usr/sbin/zabbix_server -f"
+      - zabbix_server_data:/var/lib/zabbix
+    command: /usr/sbin/zabbix_server -f
     depends_on:
       zabbix-mysql:
         condition: service_healthy
