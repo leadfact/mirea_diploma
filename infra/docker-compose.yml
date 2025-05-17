@@ -137,32 +137,32 @@ services:
       - go-app3
     restart: always
 
-  # wireguard:
-  #   container_name: wireguard
-  #   image: linuxserver/wireguard
-  #   cap_add:
-  #     - NET_ADMIN
-  #     - SYS_MODULE
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=America/Sao_Paulo
-  #     - SERVERURL=213.171.25.166
-  #     - SERVERPORT=51820
-  #     - PEERS=client1
-  #     - PEERDNS=8.8.8.8
-  #     - PEERDNS=auto
-  #     - INTERNAL_SUBNET=10.13.13.0
-  #   volumes:
-  #     - ./wireguard/config:/config
-  #     - /lib/modules:/lib/modules
-  #   ports:
-  #     - "51820:51820/udp"
-  #   sysctls:
-  #     - net.ipv4.conf.all.src_valid_mark=1
-  #   restart: unless-stopped
-  #   networks:
-  #     - network-zabbix
+  wireguard:
+    container_name: wireguard
+    image: linuxserver/wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - SERVERURL=213.171.25.166
+      - SERVERPORT=51820
+      - PEERS=client1
+      - PEERDNS=8.8.8.8
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+    volumes:
+      - ./wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      - network-zabbix
 
   freeipa:
       container_name: freeipa
@@ -186,8 +186,6 @@ services:
         - "88:88/udp"   # Kerberos UDP
         - "464:464/udp" # Kerberos UDP
         - "123:123/udp" # NTP
-        - "53:53/udp"   # DNS
-        - "53:53/tcp"   # DNS
       environment:
         - IPA_SERVER_HOSTNAME=ipa.example.local
         - IPA_SERVER_IP=172.20.0.10
