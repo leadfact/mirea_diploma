@@ -42,7 +42,7 @@ services:
 
   zabbix-frontend:
     container_name: zabbix-frontend
-    image: zabbix/zabbix-web-apache-mysql:ubuntu-5.0.1
+    image: zabbix/zabbix-web-nginx-mysql:ubuntu-5.0.1
     networks:
       - network-zabbix
     links:
